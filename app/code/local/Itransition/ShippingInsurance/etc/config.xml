@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Itransition_ShippingInsurance>
+            <version>1.1.3</version>
+        </Itransition_ShippingInsurance>
+    </modules>
+    <global>
+        <sales>
+            <quote>
+                <totals>
+                    <shipping_insurance />
+                </totals>
+            </quote>
+        </sales>
+
+        <fieldsets>
+            <sales_convert_quote>
+                <shipping_insurance><to_order>*</to_order></shipping_insurance>
+                <insurance_shipping_method><to_order>*</to_order></insurance_shipping_method>
+                <shipping_value_without_insurance><to_order>*</to_order></shipping_value_without_insurance>
+            </sales_convert_quote>
+
+            <sales_convert_quote_address>
+                <shipping_insurance><to_order_address>*</to_order_address></shipping_insurance>
+                <insurance_shipping_method><to_order_address>*</to_order_address></insurance_shipping_method>
+                <shipping_value_without_insurance><to_order_address>*</to_order_address></shipping_value_without_insurance>
+            </sales_convert_quote_address>
+
+            <sales_convert_order_address>
+                <shipping_insurance><to_quote_address>*</to_quote_address></shipping_insurance>
+                <insurance_shipping_method><to_quote_address>*</to_quote_address></insurance_shipping_method>
+                <shipping_value_without_insurance><to_quote_address>*</to_quote_address></shipping_value_without_insurance>
+            </sales_convert_order_address>
+
+            <sales_convert_order>
+                <shipping_insurance><to_quote>*</to_quote></shipping_insurance>
+                <insurance_shipping_method><to_quote>*</to_quote></insurance_shipping_method>
+                <shipping_value_without_insurance><to_quote>*</to_quote></shipping_value_without_insurance>
+            </sales_convert_order>
+        </fieldsets>
+
+        <blocks>
+            <shippinginsurance>
+                <class>Itransition_ShippingInsurance_Block</class>
+            </shippinginsurance>
+        </blocks>
+
+        <helpers>
+            <shippinginsurance>
+                <class>Itransition_ShippingInsurance_Helper</class>
+            </shippinginsurance>
+        </helpers>
+
+        <models>
+            <shippinginsurance>
+                <class>Itransition_ShippingInsurance_Model</class>
+                <resourceModel>shippinginsurance</resourceModel>
+            </shippinginsurance>
+        </models>
+
+
+        <resources>
+            <shippinginsurance_setup>
+                <setup>
+                    <module>Itransition_ShippingInsurance</module>
+                    <class>Mage_Sales_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </shippinginsurance_setup>
+            <categoryrestrict_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </categoryrestrict_write>
+            <categoryrestrict_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </categoryrestrict_read>
+        </resources>
+
+
+        <events>
+            <checkout_submit_all_after>
+                <observers>
+                    <shippinginsurancepreventreclac_observer>
+                        <type>singleton</type>
+                        <class>shippinginsurance/observer</class>
+                        <method>preventRecalculate</method>
+                    </shippinginsurancepreventreclac_observer>
+                </observers>
+            </checkout_submit_all_after>
+            <checkout_controller_onepage_save_shipping_method>
+                <observers>
+                    <shippinginsurancecalc_observer>
+                        <type>singleton</type>
+                        <class>shippinginsurance/observer</class>
+                        <method>calculateValue</method>
+                    </shippinginsurancecalc_observer>
+                </observers>
+            </checkout_controller_onepage_save_shipping_method>
+            <sales_quote_collect_totals_before>
+                <observers>
+                    <shippinginsuranceadd_observer>
+                        <type>singleton</type>
+                        <class>shippinginsurance/observer</class>
+                        <method>addValue</method>
+                    </shippinginsuranceadd_observer>
+                </observers>
+            </sales_quote_collect_totals_before>
+        </events>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <shippinginsurance>
+                    <file>shipping_insurance.xml</file>
+                </shippinginsurance>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <shippinginsurance_options>
+                                            <title>Shipping Insurance</title>
+                                        </shippinginsurance_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>

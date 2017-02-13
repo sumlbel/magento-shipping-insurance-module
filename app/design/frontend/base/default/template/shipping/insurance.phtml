@@ -1,0 +1,11 @@
+<?php if ($this->isEnabled()): ?>
+    <span>
+        I want to buy shipping insurance
+        <input style="vertical-align: bottom; position: relative; top: -1px;"
+               type="checkbox" name="insurance_enabled" value="1">
+        <br>
+        <div style="color: green;">
+            (<?php echo $this->getInsuranceValue(); ?>)
+        </div>
+    </span>
+<?php endif ?>
