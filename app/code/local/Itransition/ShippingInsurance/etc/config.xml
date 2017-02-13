@@ -9,10 +9,37 @@
         <sales>
             <quote>
                 <totals>
-                    <shipping_insurance />
+                    <shipping_insurance>
+                        <class>shippinginsurance/QuoteTotal</class>
+                    </shipping_insurance>
                 </totals>
             </quote>
+            <order_invoice>
+                <totals>
+                    <shipping_insurance>
+                        <class>shippinginsurance/InvoiceTotal</class>
+                    </shipping_insurance>
+                </totals>
+            </order_invoice>
+            <order_creditmemo>
+                <totals>
+                    <shipping_insurance>
+                        <class>shippinginsurance/CreditmemoTotal</class>
+                    </shipping_insurance>
+                </totals>
+            </order_creditmemo>
         </sales>
+        <pdf>
+            <totals>
+                <shipping_insurance>
+                    <title>Shipping Insurance</title>
+                    <source_field>shipping_insurance</source_field>
+                    <font_size>7</font_size>
+                    <display_zero>0</display_zero>
+                    <sort_order>300</sort_order>
+                </shipping_insurance>
+            </totals>
+        </pdf>
 
         <fieldsets>
             <sales_convert_quote>
@@ -44,6 +71,20 @@
             <shippinginsurance>
                 <class>Itransition_ShippingInsurance_Block</class>
             </shippinginsurance>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderTotals</sales_order_totals>
+                    <sales_order_invoice_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderInvoiceTotals</sales_order_invoice_totals>
+                    <sales_order_creditmemo_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderCreditmemoTotals</sales_order_creditmemo_totals>
+                </rewrite>
+            </adminhtml>
+            <sales>
+                <rewrite>
+                    <order_totals>Itransition_ShippingInsurance_Block_SalesOrderTotals</order_totals>
+                    <order_invoice_totals>Itransition_ShippingInsurance_Block_SalesOrderInvoiceTotals</order_invoice_totals>
+                    <order_creditmemo_totals>Itransition_ShippingInsurance_Block_SalesOrderCreditmemoTotals</order_creditmemo_totals>
+                </rewrite>
+            </sales>
         </blocks>
 
         <helpers>
@@ -84,33 +125,15 @@
 
 
         <events>
-            <checkout_submit_all_after>
-                <observers>
-                    <shippinginsurancepreventreclac_observer>
-                        <type>singleton</type>
-                        <class>shippinginsurance/observer</class>
-                        <method>preventRecalculate</method>
-                    </shippinginsurancepreventreclac_observer>
-                </observers>
-            </checkout_submit_all_after>
             <checkout_controller_onepage_save_shipping_method>
                 <observers>
                     <shippinginsurancecalc_observer>
                         <type>singleton</type>
                         <class>shippinginsurance/observer</class>
-                        <method>calculateValue</method>
+                        <method>setInsurance</method>
                     </shippinginsurancecalc_observer>
                 </observers>
             </checkout_controller_onepage_save_shipping_method>
-            <sales_quote_collect_totals_before>
-                <observers>
-                    <shippinginsuranceadd_observer>
-                        <type>singleton</type>
-                        <class>shippinginsurance/observer</class>
-                        <method>addValue</method>
-                    </shippinginsuranceadd_observer>
-                </observers>
-            </sales_quote_collect_totals_before>
         </events>
     </global>
     <frontend>
