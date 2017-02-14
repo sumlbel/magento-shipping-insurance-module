@@ -1,6 +1,7 @@
 <?php
 
-class Itransition_ShippingInsurance_Model_Number extends Mage_Core_Model_Config_Data {
+class Itransition_ShippingInsurance_Model_Number extends Mage_Core_Model_Config_Data
+{
     public function save() {
         $number = $this->getValue();
         if (!is_numeric($number))  {
@@ -12,7 +13,6 @@ class Itransition_ShippingInsurance_Model_Number extends Mage_Core_Model_Config_
             Mage::getSingleton('core/session')->addError('Value has to be positive');
             return true;
         }
-
         return parent::save();
     }
 }

@@ -8,9 +8,9 @@ class Itransition_ShippingInsurance_Model_Type
    */
   public function toOptionArray()
   {
-    return array(
-      array('value'=>0, 'label'=>'Procentage'),
-      array('value'=>1, 'label'=>'Absolute')
-    );
+      return [
+          ['value'=>0, 'label'=>'Procentage'],
+          ['value'=>1, 'label'=>'Absolute']
+      ];
   }
 }

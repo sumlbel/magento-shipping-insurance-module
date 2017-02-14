@@ -11,63 +11,76 @@ class Itransition_ShippingInsurance_Model_QuoteTotal extends Mage_Sales_Model_Qu
         );
 
         if ($enabled) {
-
             $items = $this->_getAddressItems($address);
             if (!count($items)) {
                 return $this; //this makes only address type shipping to come through
             }
 
-            $type = Mage::getStoreConfig(
-                'shippinginsurance_options/insurance/insurance_type'
-            );
-            $value = Mage::getStoreConfig(
-                'shippinginsurance_options/insurance/insurance_value'
-            );
-
-            $quote = $address->getQuote();
-
-            $subTotal = floatval($address->getSubtotal());
-            $countedValue = 0;
-
-            if ($type == 1) {
-                $countedValue = round($value, 4, PHP_ROUND_HALF_UP);
-            }
-            elseif ($type == 0) {
-                $countedValue = round(
-                    $subTotal * ($value / 100),
-                    4,
-                    PHP_ROUND_HALF_UP
-                );
-            }
-            $quote->setShippingInsurance($countedValue);
-            $address->setShippingInsurance($countedValue);
-            if ($address->getInsuranceShippingMethod()) {
-                $address->setGrandTotal(
-                    $address->getGrandTotal() + $address->getShippingInsurance()
-                );
-                $address->setBaseGrandTotal(
-                    $address->getBaseGrandTotal(
-                    ) + $address->getShippingInsurance()
-                );
-            }
+            $insuranceValue = $this->countInsuranceValue($address);
+            $this->setInsuranceValue($address, $insuranceValue);
         }
     }
 
     public function fetch(Mage_Sales_Model_Quote_Address $address)
     {
-        $enabled = Mage::getStoreConfig(
-            'shippinginsurance_options/insurance/insurance_enable'
+        $label = Mage::getStoreConfig(
+            'shippinginsurance_options/insurance/insurance_label'
         );
-        if ($enabled && $address->getInsuranceShippingMethod()) {
+        if ($address->getInsuranceShippingMethod()) {
             $amt = $address->getShippingInsurance();
             $address->addTotal(
-                array(
-                    'code' => $this->getCode(),
-                    'title'=>Mage::helper('shippinginsurance')->__('Shipping Insurance'),
-                    'value' => $amt
-                )
+                ['code' => $this->getCode(),
+                    'title'=>Mage::helper('shippinginsurance')->__($label),
+                    'value' => $amt]
             );
         }
         return $this;
+    }
+
+    /**
+     * @param \Mage_Sales_Model_Quote_Address $address
+     * @return float|int
+     */
+    protected function countInsuranceValue(Mage_Sales_Model_Quote_Address $address)
+    {
+        $type = Mage::getStoreConfig(
+            'shippinginsurance_options/insurance/insurance_type'
+        );
+        $value = Mage::getStoreConfig(
+            'shippinginsurance_options/insurance/insurance_value'
+        );
+        $subTotal = floatval($address->getSubtotal());
+        $countedValue = 0;
+
+        if ($type == 1) {
+            $countedValue = round($value, 4, PHP_ROUND_HALF_UP);
+        }
+        elseif ($type == 0) {
+            $countedValue = round(
+                $subTotal * ($value / 100),
+                4,
+                PHP_ROUND_HALF_UP
+            );
+        }
+        return $countedValue;
+    }
+
+    /**
+     * @param \Mage_Sales_Model_Quote_Address $address
+     * @param $insuranceValue
+     */
+    protected function setInsuranceValue(Mage_Sales_Model_Quote_Address $address, $insuranceValue)
+    {
+        $quote = $address->getQuote();
+        $quote->setShippingInsurance($insuranceValue);
+        $address->setShippingInsurance($insuranceValue);
+        if ($address->getInsuranceShippingMethod()) {
+            $address->setGrandTotal(
+                $address->getGrandTotal() + $address->getShippingInsurance()
+            );
+            $address->setBaseGrandTotal(
+                $address->getBaseGrandTotal() + $address->getShippingInsurance()
+            );
+        }
     }
 }
