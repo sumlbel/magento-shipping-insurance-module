@@ -3,7 +3,7 @@
     <tabs>
         <shippinginsurance translate="label" module="shippinginsurance">
             <label>Itransition</label>
-            <sort_order>1</sort_order>
+            <sort_order>100</sort_order>
         </shippinginsurance>
     </tabs>
 

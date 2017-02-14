@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Itransition_ShippingInsurance>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Itransition_ShippingInsurance>
     </modules>
     <global>
@@ -148,9 +148,6 @@
     <adminhtml>
         <acl>
             <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
                 <admin>
                     <children>
                         <system>
