@@ -1,7 +1,8 @@
 <?php
 class Itransition_ShippingInsurance_Model_Observer
 {
-    public function setInsurance(Varien_Event_Observer $observer) {
+    public function setInsurance(Varien_Event_Observer $observer)
+    {
         $enabled = Mage::getStoreConfig(
             'shippinginsurance_options/insurance/insurance_enable'
         );

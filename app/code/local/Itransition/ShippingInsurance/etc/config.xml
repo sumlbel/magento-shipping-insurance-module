@@ -5,26 +5,27 @@
             <version>1.0.1</version>
         </Itransition_ShippingInsurance>
     </modules>
+
     <global>
         <sales>
             <quote>
                 <totals>
                     <shipping_insurance>
-                        <class>shippinginsurance/QuoteTotal</class>
+                        <class>shippinginsurance/Total_Quote</class>
                     </shipping_insurance>
                 </totals>
             </quote>
             <order_invoice>
                 <totals>
                     <shipping_insurance>
-                        <class>shippinginsurance/InvoiceTotal</class>
+                        <class>shippinginsurance/Total_Invoice</class>
                     </shipping_insurance>
                 </totals>
             </order_invoice>
             <order_creditmemo>
                 <totals>
                     <shipping_insurance>
-                        <class>shippinginsurance/CreditmemoTotal</class>
+                        <class>shippinginsurance/Total_Creditmemo</class>
                     </shipping_insurance>
                 </totals>
             </order_creditmemo>
@@ -68,21 +69,21 @@
         </fieldsets>
 
         <blocks>
-            <shippinginsurance>
-                <class>Itransition_ShippingInsurance_Block</class>
-            </shippinginsurance>
+            <shippinginsurance_checkout_onepage>
+                <class>Itransition_ShippingInsurance_Block_Checkout_Onepage</class>
+            </shippinginsurance_checkout_onepage>
             <adminhtml>
                 <rewrite>
-                    <sales_order_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderTotals</sales_order_totals>
-                    <sales_order_invoice_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderInvoiceTotals</sales_order_invoice_totals>
-                    <sales_order_creditmemo_totals>Itransition_ShippingInsurance_Block_AdminSalesOrderCreditmemoTotals</sales_order_creditmemo_totals>
+                    <sales_order_totals>Itransition_ShippingInsurance_Block_Totals_Admin_SalesOrder</sales_order_totals>
+                    <sales_order_invoice_totals>Itransition_ShippingInsurance_Block_Totals_Admin_SalesOrderInvoice</sales_order_invoice_totals>
+                    <sales_order_creditmemo_totals>Itransition_ShippingInsurance_Block_Totals_Admin_SalesOrderCreditmemo</sales_order_creditmemo_totals>
                 </rewrite>
             </adminhtml>
             <sales>
                 <rewrite>
-                    <order_totals>Itransition_ShippingInsurance_Block_SalesOrderTotals</order_totals>
-                    <order_invoice_totals>Itransition_ShippingInsurance_Block_SalesOrderInvoiceTotals</order_invoice_totals>
-                    <order_creditmemo_totals>Itransition_ShippingInsurance_Block_SalesOrderCreditmemoTotals</order_creditmemo_totals>
+                    <order_totals>Itransition_ShippingInsurance_Block_Totals_SalesOrder</order_totals>
+                    <order_invoice_totals>Itransition_ShippingInsurance_Block_Totals_SalesOrderInvoice</order_invoice_totals>
+                    <order_creditmemo_totals>Itransition_ShippingInsurance_Block_Totals_SalesOrderCreditmemo</order_creditmemo_totals>
                 </rewrite>
             </sales>
         </blocks>
@@ -99,7 +100,6 @@
                 <resourceModel>shippinginsurance</resourceModel>
             </shippinginsurance>
         </models>
-
 
         <resources>
             <shippinginsurance_setup>
@@ -123,7 +123,6 @@
             </categoryrestrict_read>
         </resources>
 
-
         <events>
             <checkout_controller_onepage_save_shipping_method>
                 <observers>
@@ -136,6 +135,7 @@
             </checkout_controller_onepage_save_shipping_method>
         </events>
     </global>
+
     <frontend>
         <layout>
             <updates>
@@ -145,6 +145,7 @@
             </updates>
         </layout>
     </frontend>
+
     <adminhtml>
         <acl>
             <resources>
@@ -166,4 +167,5 @@
             </resources>
         </acl>
     </adminhtml>
+
 </config>

@@ -1,5 +1,5 @@
 <?php
-class Itransition_ShippingInsurance_Block_AdminSalesOrderCreditmemoTotals  extends Mage_Adminhtml_Block_Sales_Order_Creditmemo_Totals
+class Itransition_ShippingInsurance_Block_Totals_SalesOrderCreditmemo  extends Mage_Sales_Block_Order_Creditmemo_Totals
 {
     protected $_code = 'shipping_insurance';
 
@@ -10,14 +10,17 @@ class Itransition_ShippingInsurance_Block_AdminSalesOrderCreditmemoTotals  exten
         $label = Mage::getStoreConfig(
             'shippinginsurance_options/insurance/insurance_label'
         );
+
         if ($order->getInsuranceShippingMethod()) {
             $amount = $order->getShippingInsurance();
             $this->addTotalBefore(
                 new Varien_Object(
-                    ['code'      => $this->getCode(),
-                        'value'     => $amount,
-                        'base_value'=> $amount,
-                        'label'     => $this->helper('shippinginsurance')->__($label)],
+                    [
+                        'code' => $this->getCode(),
+                        'value' => $amount,
+                        'base_value' => $amount,
+                        'label' => $this->helper('shippinginsurance')->__($label)
+                    ],
                     'grand_total'
                 )
             );

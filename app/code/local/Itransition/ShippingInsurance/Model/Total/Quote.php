@@ -1,6 +1,7 @@
 <?php
 
-class Itransition_ShippingInsurance_Model_QuoteTotal extends Mage_Sales_Model_Quote_Address_Total_Abstract {
+class Itransition_ShippingInsurance_Model_Total_Quote extends Mage_Sales_Model_Quote_Address_Total_Abstract
+{
     protected $_code = 'shipping_insurance';
 
     public function collect(Mage_Sales_Model_Quote_Address $address)
@@ -26,6 +27,7 @@ class Itransition_ShippingInsurance_Model_QuoteTotal extends Mage_Sales_Model_Qu
         $label = Mage::getStoreConfig(
             'shippinginsurance_options/insurance/insurance_label'
         );
+
         if ($address->getInsuranceShippingMethod()) {
             $amt = $address->getShippingInsurance();
             $address->addTotal(
@@ -62,6 +64,7 @@ class Itransition_ShippingInsurance_Model_QuoteTotal extends Mage_Sales_Model_Qu
                 PHP_ROUND_HALF_UP
             );
         }
+
         return $countedValue;
     }
 
@@ -74,6 +77,7 @@ class Itransition_ShippingInsurance_Model_QuoteTotal extends Mage_Sales_Model_Qu
         $quote = $address->getQuote();
         $quote->setShippingInsurance($insuranceValue);
         $address->setShippingInsurance($insuranceValue);
+
         if ($address->getInsuranceShippingMethod()) {
             $address->setGrandTotal(
                 $address->getGrandTotal() + $address->getShippingInsurance()
