@@ -17,7 +17,7 @@ class Itransition_ShippingInsurance_Block_Totals_Admin_SalesOrderInvoice extends
                 new Varien_Object(
                     [
                         'code' => $this->getCode(),
-                        'value' => $amount,
+                        'value' => Mage::helper('core')->currency($amount, true, false),
                         'base_value' => $amount,
                         'label' => $this->helper('shippinginsurance')->__($label)
                     ],

@@ -1,6 +1,6 @@
 # magento-shipping-insurance-module
 This module adds shipping insurance to order.
-Customer can check, that he wants shipping insurance on onepage checkoud under the "Shipping method" section.
+Customer can check, that he wants shipping insurance on onepage checkout under the "Shipping method" section.
 After that it will be added to totals and displayed in any totals for him and admin.
 
 Module can be configurated in "Sales" (System configuration) section as "Shipping insurance".

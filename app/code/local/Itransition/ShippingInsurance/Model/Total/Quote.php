@@ -29,7 +29,7 @@ class Itransition_ShippingInsurance_Model_Total_Quote extends Mage_Sales_Model_Q
         );
 
         if ($address->getInsuranceShippingMethod()) {
-            $amt = $address->getShippingInsurance();
+            $amt = Mage::helper('core')->currency($address->getShippingInsurance(), true, false);
             $address->addTotal(
                 ['code' => $this->getCode(),
                     'title'=>Mage::helper('shippinginsurance')->__($label),
@@ -51,21 +51,22 @@ class Itransition_ShippingInsurance_Model_Total_Quote extends Mage_Sales_Model_Q
         $value = Mage::getStoreConfig(
             'shippinginsurance_options/insurance/insurance_value'
         );
+
         $subTotal = floatval($address->getSubtotal());
-        $countedValue = 0;
 
         if ($type == 1) {
-            $countedValue = round($value, 4, PHP_ROUND_HALF_UP);
+            return round($value, 4, PHP_ROUND_HALF_UP);
         }
-        elseif ($type == 0) {
-            $countedValue = round(
+
+        if ($type == 0) {
+            return round(
                 $subTotal * ($value / 100),
                 4,
                 PHP_ROUND_HALF_UP
             );
         }
 
-        return $countedValue;
+        return 0;
     }
 
     /**
